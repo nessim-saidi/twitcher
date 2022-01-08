@@ -11,3 +11,74 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.video-container {
+  width: 50%;
+}
+.messaging-container {
+  width: 50%;
+}
+
+.auth-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #070a0d;
+  display: flex;
+  justify-content: center;
+}
+
+.auth-container .box {
+  min-width: 20vw;
+  background-color: #151a1f;
+  align-self: center;
+}
+
+.auth-container .box .form{
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.auth-container .box input {
+  font-size: 1.25em;
+  height: 2rem;
+  margin-top: 0.25rem;
+}
+
+.auth-container .box .action{
+  background-color: #5f9ea0;
+  color: white;
+  width: 80%;
+  font-size: 1.25em;
+  height: 1.7em;
+  align-self: center;
+  margin-top: 0.75rem;
+  border: none;
+}
+
+.auth-container .box .action:hover {
+  background-color: #568a8b;
+}
+
+.auth-container .auth-options {
+  display: flex;
+  flex-direction: row;
+}
+
+.auth-container .auth-options button{
+  background-color: #151a1f;
+  color: white;
+  width: 50%;
+  padding: 1.25em;
+  font-size: large;
+  text-align: center;
+  border: none;
+}
+
+.auth-container .auth-options button.active{
+  background-color: dodgerblue;
+}
+
+.error.text{
+  color:indianred;
+}
