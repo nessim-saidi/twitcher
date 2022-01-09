@@ -45,10 +45,10 @@ code {
   margin-top: 0.25rem;
 }
 
-.auth-container .box .action{
-  background-color: #5f9ea0;
+button.action{
+  background-color: #4e65e6;
   color: white;
-  width: 80%;
+  width: 100%;
   font-size: 1.25em;
   height: 1.7em;
   align-self: center;
@@ -56,8 +56,8 @@ code {
   border: none;
 }
 
-.auth-container .box .action:hover {
-  background-color: #568a8b;
+button.action:hover {
+  background-color: #4057d6;
 }
 
 .auth-container .auth-options {
@@ -76,7 +76,7 @@ code {
 }
 
 .auth-container .auth-options button.active{
-  background-color: dodgerblue;
+  background-color: #07203a;
 }
 
 .error.text{

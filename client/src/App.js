@@ -14,11 +14,11 @@ import '@stream-io/stream-chat-css/dist/css/index.css';
 import Auth from './components/Auth'
 import MessagingContainer from './components/MessagingContainer';
 import Video from './components/Video';
-
+import { useCookies } from 'react-cookie';
 
 const API_KEY = 'asgjv766hukp';
 // JWT user authentication
-const userToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGF2ZS1tYXR0aGV3cyJ9.nNL3CJHw0ow63fV3VouvDUyBK_DneXBHO9NelOD5_70';
+// const userToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZGF2ZS1tYXR0aGV3cyJ9.nNL3CJHw0ow63fV3VouvDUyBK_DneXBHO9NelOD5_70';
 
 const filters = { type: 'messaging' };
 const options = { state: true, presence: true, limit: 10 };
@@ -29,35 +29,50 @@ const client = StreamChat.getInstance(API_KEY);
 const App = () => {
   const [clientReady, setClientReady] = useState(false);
   const [channel, setChannel] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
-  const authToken = false;
+  const authToken = cookies.AuthToken;
+/*   const channel = async () => { await client.channel('messaging', 'gaming-demo', {
+      name: 'Gaming Demo',
+
+    })
+  }; */
 
   useEffect(() => {
     const setupClient = async () => {
-      try {
-        await client.connectUser(
-          {
-            id: 'dave-matthews',
-            name: 'Dave Matthews',
-          },
-          userToken,
-        );
+      console.log("Enter useEffect hook");
+      //if (authToken) {
+        console.log("User found: " + cookies.Name);
 
-        const channel = await client.channel('messaging', 'gaming-demo', {
-          name: 'Gaming Demo',
-        });
-        setChannel(channel);
+        try {
+          await client.connectUser(
+            {
+              id: cookies.UserId,
+              name: cookies.Name,
+            },
+            authToken,
+          );
 
-        setClientReady(true);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+          const channel = await client.channel('messaging', 'messaging-demo', {
+            name: 'General Chat',
 
-    setupClient();
-  }, []);
+          });
+          setChannel(channel);
 
-  if (!clientReady) return null;
+          //await channel.addMembers([cookies.UserId], { text: `${cookies.Name} joined the channel.` }); 
+
+          setClientReady(true);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+    if(authToken) {
+      setupClient();
+    }
+  }, [authToken, cookies.Name, cookies.UserId]);
+
+  //if (!clientReady) return null;
 
   const customStyle = {
     '--primary-color': 'green',
@@ -66,12 +81,14 @@ const App = () => {
     '--xs-p': '1.2rem',
   };
 
+  console.log("Return UI");
+
   return (
     <>
     {!authToken && <Auth />}
     {authToken && <Chat client={client} customStyles={customStyle}>
      
-      <ChannelList filters={filters} sort={sort} options={options} />
+      
       <Channel channel={channel} >
       <Video/>
         <MessagingContainer/>
@@ -82,21 +99,3 @@ const App = () => {
 };
 
 export default App;
-
-
-/* function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome Dev!
-        </p>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-
-      </header>
-    </div>
-  );
-} */
