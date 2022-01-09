@@ -90,7 +90,7 @@ const App = () => {
   return (
     <>
     {!authToken && <Auth />}
-    {authToken && <Chat client={client} customStyles={customStyle}>
+    {authToken && <Chat client={client} darkMode={true} customStyles={customStyle}>
      
       
       <Channel channel={channel} >
