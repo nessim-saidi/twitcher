@@ -15,8 +15,20 @@ code {
 .video-container {
   width: 50%;
 }
+
 .messaging-container {
   width: 50%;
+}
+
+.messaging-container .icon.users {
+  position: fixed;
+  z-index: +10;
+  top: 25px;
+  right: 24px;
+}
+
+.messaging-container .icon.active {
+  color: darkgoldenrod;
 }
 
 .auth-container {
@@ -77,6 +89,42 @@ button.action:hover {
 
 .auth-container .auth-options button.active{
   background-color: #07203a;
+}
+
+.userlist-container {
+  background-color: #151a1f;
+  width: 100%;
+  /* padding: 2em; */
+  height: 30%;
+  overflow-y: scroll;
+}
+
+.userlist-container header {
+  background-color: #242c35;
+  color: white;
+  font-weight: bold;
+  height: 2em;
+  padding: 0.4em;
+}
+
+.userlist-container ul{
+
+}
+
+.userlist-container li{
+  /* background-color: #202830; */
+  list-style: none;
+  color: white;
+  padding: 0.4em;
+  margin: 0;
+  display: flex;
+}
+.userlist-container li:hover{
+  background-color: #202830;
+}
+.userlist-container li p {
+  padding: 0 0 0.6em 0.6em;
+  margin: 0;
 }
 
 .error.text{

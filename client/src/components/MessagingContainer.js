@@ -11,9 +11,12 @@ import {
 import React from "react";
 import { useCookies } from 'react-cookie';
 import UserList from './UserList';
+import { FaUsers, FaArrowAltCircleLeft } from 'react-icons/fa'
+import { useState } from 'react';
 
-const MessagingContainer = () => {
+const MessagingContainer = ({users}) => {
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    const [userListVisible, setUserListVisible] = useState(true);
 
     const logout = () => {
         removeCookie('Name', cookies.Name);
@@ -29,8 +32,11 @@ const MessagingContainer = () => {
                 <ChannelHeader />
                 <MessageList />
                 <MessageInput />
+                
+                <FaUsers className={`icon users${userListVisible ? " active" : ""}`} onClick={() => setUserListVisible(!userListVisible)} />
+                {userListVisible && <UserList users={users} />}
+
                 <button className="action" onClick={logout}>Logout</button>
-                <UserList />
             </Window>
             <Thread />
         </div>

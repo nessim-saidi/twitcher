@@ -29,48 +29,52 @@ const client = StreamChat.getInstance(API_KEY);
 const App = () => {
   const [clientReady, setClientReady] = useState(false);
   const [channel, setChannel] = useState(null);
+  const [users, setUsers] = useState(null);
+
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
   const authToken = cookies.AuthToken;
-/*   const channel = async () => { await client.channel('messaging', 'gaming-demo', {
-      name: 'Gaming Demo',
 
-    })
-  }; */
-
-  useEffect(() => {
-    const setupClient = async () => {
-      console.log("Enter useEffect hook");
-      //if (authToken) {
-        console.log("User found: " + cookies.Name);
-
-        try {
-          await client.connectUser(
-            {
-              id: cookies.UserId,
-              name: cookies.Name,
-            },
-            authToken,
-          );
-
-          const channel = await client.channel('messaging', 'messaging-demo', {
-            name: 'General Chat',
-
-          });
-          setChannel(channel);
-
-          //await channel.addMembers([cookies.UserId], { text: `${cookies.Name} joined the channel.` }); 
-
-          setClientReady(true);
-        } catch (err) {
-          console.log(err);
-        }
+  useEffect( () => {
+    if (authToken) {
+      const getUsers = async () => {
+        const {users} = await client.queryUsers({role: 'user'});
+        setUsers(users);
       };
 
-    if(authToken) {
-      setupClient();
+      getUsers();
     }
-  }, [authToken, cookies.Name, cookies.UserId]);
+  }, [authToken]);
+
+  const setupClient = async () => {
+    console.log("Enter useEffect hook");
+    //if (authToken) {
+      console.log("User found: " + cookies.Name);
+
+      try {
+        await client.connectUser(
+          {
+            id: cookies.UserId,
+            name: cookies.Name,
+          },
+          authToken,
+        );
+
+        const channel = await client.channel('messaging', 'messaging-demo', {
+          name: 'General Chat',
+
+        });
+        setChannel(channel);
+
+        setClientReady(true);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+  if(authToken) {
+    setupClient();
+  }
 
   //if (!clientReady) return null;
 
@@ -91,7 +95,7 @@ const App = () => {
       
       <Channel channel={channel} >
       <Video/>
-        <MessagingContainer/>
+        <MessagingContainer users={users} />
       </Channel>
     </Chat>}
     </>
